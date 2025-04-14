@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Erro no Servidor - Crypto Arbitrage Bot{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="text-center my-5">
+        <h1 class="display-1 fw-bold">500</h1>
+        <p class="fs-3">Erro no Servidor</p>
+        <p class="lead">Desculpe, ocorreu um erro no servidor. Nossa equipe foi notificada e está trabalhando para resolver o problema.</p>
+        <div class="mt-4">
+            <a href="/" class="btn btn-primary">Voltar ao Dashboard</a>
+            <button onclick="window.location.reload();" class="btn btn-outline-secondary ms-2">Tentar Novamente</button>
+        </div>
+        <div class="mt-5">
+            <img src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif" alt="500 Erro" class="img-fluid" style="max-height: 350px;">
+        </div>
+    </div>
+</div>
+{% endblock %}

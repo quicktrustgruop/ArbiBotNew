@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Crypto Arbitrage Bot{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Cloud Mining Stats -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Cloud Mining Status</h5>
+                <span class="badge bg-success">Active</span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mining-stat">
+                            <h6>Total Hash Power</h6>
+                            <h4 class="text-primary" id="totalHashPower">0 TH/s</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mining-stat">
+                            <h6>Active Workers</h6>
+                            <h4 class="text-success" id="activeWorkers">0</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mining-stat">
+                            <h6>24h Mining Revenue</h6>
+                            <h4 class="text-info" id="miningRevenue">$0.00</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mining-stat">
+                            <h6>Efficiency</h6>
+                            <h4 class="text-warning" id="miningEfficiency">0%</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Profit</h5>
+                    <p class="card-text text-info">$0.00</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Scans</h5>
+                    <p class="card-text text-primary">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Successful Trades</h5>
+                    <p class="card-text text-success">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Failed Trades</h5>
+                    <p class="card-text text-danger">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Arbitrage Opportunities</h5>
+            <div>
+                <button class="btn btn-primary btn-sm" onclick="exportToCSV()">Export CSV</button>
+                <button class="btn btn-success btn-sm" onclick="window.location.reload()">Refresh</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Network</th>
+                            <th>Token Pair</th>
+                            <th>Buy DEX</th>
+                            <th>Sell DEX</th>
+                            <th>Price Diff %</th>
+                            <th>Expected Profit</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="opportunities-table">
+                        {% for opp in opportunities %}
+                        <tr>
+                            <td>{{ opp.network }}</td>
+                            <td>{{ opp.token_pair }}</td>
+                            <td>{{ opp.buy_dex }}</td>
+                            <td>{{ opp.sell_dex }}</td>
+                            <td>{{ "%.2f"|format(opp.price_diff_percentage) }}%</td>
+                            <td>${{ "%.2f"|format(opp.expected_profit_usd) }}</td>
+                            <td><span class="badge bg-{{ 'success' if opp.status == 'executed' else 'warning' if opp.status == 'detected' else 'danger' }}">{{ opp.status }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function exportToCSV() {
+    const rows = document.querySelectorAll('#opportunities-table tr');
+    let csvContent = "Network,Token Pair,Buy DEX,Sell DEX,Price Diff %,Expected Profit,Status\n";
+
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const rowData = Array.from(cells).map(cell => `"${cell.textContent.trim()}"`).join(',');
+        csvContent += rowData + '\n';
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'arbitrage_opportunities.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+}
+
+// Auto-refresh every 30 seconds
+setInterval(() => {
+    window.location.reload();
+}, 30000);
+</script>
+{% endblock %}

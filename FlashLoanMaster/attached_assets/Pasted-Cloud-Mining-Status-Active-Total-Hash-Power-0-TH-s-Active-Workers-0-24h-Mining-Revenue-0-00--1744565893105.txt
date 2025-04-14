@@ -1,0 +1,83 @@
+Cloud Mining Status
+Active
+Total Hash Power
+0 TH/s
+Active Workers
+0
+24h Mining Revenue
+$0.00
+Efficiency
+0%
+Total Profit
+$0.00
+
+Scans
+0
+
+Successful Trades
+0
+
+Failed Trades
+0
+
+Arbitrage Opportunities
+ 
+Network	Token Pair	Buy DEX	Sell DEX	Price Diff %	Expected Profit	Status
+ethereum	WBTC/ETH	uniswap_v2	sushiswap	3.00%	$42.13	detected
+ethereum	ETH/USDT	uniswap_v2	sushiswap	3.00%	$3785197.50	detected
+ethereum	WBTC/ETH	uniswap_v2	sushiswap	3.00%	$42.13	detected
+ethereum	WBTC/ETH	uniswap_v2	sushiswap	3.00%	$42.13	detected
+polygon	WBTC/ETH	uniswap_v3	quickswap	7.92%	$267.03	detected
+ethereum	ETH/USDC	uniswap_v2	sushiswap	3.00%	$3789524.74	detected
+polygon	WBTC/ETH	uniswap_v3	quickswap	7.92%	$267.03	detected
+polygon	WBTC/ETH	uniswap_v3	quickswap	7.92%	$267.03	detected
+ethereum	ETH/USDT	uniswap_v2	sushiswap	3.00%	$3785197.50	detected
+polygon	ETH/USDT	uniswap_v3	quickswap	7.92%	$10681999.98	detected
+ethereum	ETH/USDT	uniswap_v2	sushiswap	3.00%	$3785197.50	detected
+ethereum	ETH/USDT	uniswap_v2	sushiswap	3.00%	$3785197.50	detected
+ethereum	ETH/USDC	uniswap_v2	sushiswap	3.00%	$3789524.74	detected
+ethereum	ETH/USDC	uniswap_v2	sushiswap	3.00%	$3789524.74	detected
+ethereum	ETH/USDC	uniswap_v2	sushiswap	3.00%	$3789524.74	detected
+polygon	ETH/USDT	uniswap_v3	quickswap	7.92%	$10681999.98	detected
+polygon	ETH/USDT	uniswap_v3	quickswap	7.92%	$10681999.98	detected
+polygon	ETH/USDT	uniswap_v3	quickswap	7.92%	$10681999.98	detected
+polygon	ETH/USDC	uniswap_v3	quickswap	7.92%	$10694211.46	detected
+polygon	ETH/USDC	uniswap_v3	quickswap	7.92%	$10694211.46	detected
+polygon	ETH/USDC	uniswap_v3	quickswap	7.92%	$10694211.46	detected
+polygon	ETH/USDC	uniswap_v3	quickswap	7.92%	$10694211.46	detected
+ethereum	WBTC/ETH	uniswap_v2	curve	3.81%	$81.03	detected
+polygon	WBTC/ETH	quickswap	curve	4.81%	$166.88	detected
+ethereum	ETH/USDT	uniswap_v2	curve	3.81%	$5340947.50	detected
+ethereum	ETH/USDC	uniswap_v2	curve	3.81%	$5347053.24	detected
+polygon	ETH/USDT	quickswap	curve	4.81%	$6676249.98	detected
+polygon	ETH/USDC	quickswap	curve	4.81%	$6683882.16	detected
+ethereum	WBTC/ETH	sushiswap	uniswap_v2	9.00%	$247.93	detected
+polygon	WBTC/ETH	sushiswap	uniswap_v3	9.00%	$300.41	detected
+ethereum	ETH/USDT	sushiswap	uniswap_v2	9.00%	$12017197.50	detected
+polygon	ETH/USDT	sushiswap	uniswap_v3	9.00%	$12017249.98	detected
+ethereum	ETH/USDC	sushiswap	uniswap_v2	9.00%	$12030935.42	detected
+polygon	ETH/USDC	sushiswap	uniswap_v3	9.00%	$12030987.90	detected
+ethereum	WBTC/ETH	uniswap_v3	sushiswap	1.89%	$13.65	detected
+polygon	WBTC/ETH	quickswap	sushiswap	5.88%	$198.43	detected
+ethereum	ETH/USDT	uniswap_v3	sushiswap	1.89%	$2645947.50	detected
+ethereum	ETH/USDC	uniswap_v3	sushiswap	1.89%	$2648972.36	detected
+polygon	ETH/USDT	quickswap	sushiswap	5.88%	$7937999.98	detected
+polygon	ETH/USDC	quickswap	sushiswap	5.88%	$7947074.57	detected
+ethereum	WBTC/ETH	curve	uniswap_v2	4.85%	$112.88	detected
+polygon	WBTC/ETH	quickswap	sushiswap	6.00%	$194.75	detected
+ethereum	ETH/USDT	curve	uniswap_v2	4.85%	$6614947.50	detected
+ethereum	ETH/USDC	curve	uniswap_v2	4.85%	$6622509.66	detected
+polygon	ETH/USDT	quickswap	sushiswap	6.00%	$7790999.97	detected
+polygon	ETH/USDC	quickswap	sushiswap	6.00%	$7799906.52	detected
+polygon	WBTC/ETH	uniswap_v3	curve	4.85%	$165.35	detected
+polygon	ETH/USDT	uniswap_v3	curve	4.85%	$6614999.98	detected
+polygon	ETH/USDC	uniswap_v3	curve	4.85%	$6622562.14	detected
+ethereum	WBTC/ETH	uniswap_v3	uniswap_v2	5.94%	$144.11	detected
+polygon	WBTC/ETH	uniswap_v3	quickswap	5.94%	$196.59	detected
+ethereum	ETH/USDT	uniswap_v3	uniswap_v2	5.94%	$7864447.50	detected
+polygon	ETH/USDT	uniswap_v3	quickswap	5.94%	$7864499.97	detected
+ethereum	ETH/USDC	uniswap_v3	uniswap_v2	5.94%	$7873438.07	detected
+polygon	ETH/USDC	uniswap_v3	quickswap	5.94%	$7873490.54	detected
+polygon	WBTC/ETH	uniswap_v3	sushiswap	5.88%	$198.43	detected
+polygon	ETH/USDT	uniswap_v3	sushiswap	5.88%	$7937999.98	detected
+polygon	ETH/USDC	uniswap_v3	sushiswap	5.88%	$7947074.57	detected

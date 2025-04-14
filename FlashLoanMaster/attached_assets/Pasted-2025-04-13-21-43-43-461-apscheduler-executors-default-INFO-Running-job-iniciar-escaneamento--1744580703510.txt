@@ -1,0 +1,294 @@
+2025-04-13 21:43:43,461 - apscheduler.executors.default - INFO - Running job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:44:13 UTC)" (scheduled at 2025-04-13 21:43:43.460647+00:00)
+2025-04-13 21:43:43,550 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:43:43,611 - blockchain_connector - ERROR - Error connecting to network Ethereum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:43,611 - arbitrage_scanner - ERROR - Failed to connect to Ethereum
+2025-04-13 21:43:43,611 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:43:43,679 - blockchain_connector - ERROR - Error connecting to network BSC: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:43,679 - arbitrage_scanner - ERROR - Failed to connect to BSC
+2025-04-13 21:43:43,679 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:43:43,745 - blockchain_connector - ERROR - Error connecting to network Polygon: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:43,746 - arbitrage_scanner - ERROR - Failed to connect to Polygon
+2025-04-13 21:43:43,746 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:43:43,837 - blockchain_connector - ERROR - Error connecting to network Arbitrum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:43,837 - arbitrage_scanner - ERROR - Failed to connect to Arbitrum
+2025-04-13 21:43:43,837 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:43:43,897 - blockchain_connector - ERROR - Error connecting to network Optimism: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:43,897 - arbitrage_scanner - ERROR - Failed to connect to Optimism
+2025-04-13 21:43:43,925 - apscheduler.executors.default - INFO - Job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:44:13 UTC)" executed successfully
+2025-04-13 21:43:46,790 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2025-04-13 21:43:46,790 - apscheduler.scheduler - DEBUG - Next wakeup is due at 2025-04-13 21:44:01.790047+00:00 (in 14.999678 seconds)
+2025-04-13 21:43:46,790 - apscheduler.executors.default - INFO - Running job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:44:16 UTC)" (scheduled at 2025-04-13 21:43:46.789821+00:00)
+2025-04-13 21:43:46,884 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:43:46,946 - blockchain_connector - ERROR - Error connecting to network Ethereum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:46,946 - arbitrage_scanner - ERROR - Failed to connect to Ethereum
+2025-04-13 21:43:46,946 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:43:47,009 - blockchain_connector - ERROR - Error connecting to network BSC: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:47,009 - arbitrage_scanner - ERROR - Failed to connect to BSC
+2025-04-13 21:43:47,009 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:43:47,072 - blockchain_connector - ERROR - Error connecting to network Polygon: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:47,072 - arbitrage_scanner - ERROR - Failed to connect to Polygon
+2025-04-13 21:43:47,072 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:43:47,142 - blockchain_connector - ERROR - Error connecting to network Arbitrum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:47,142 - arbitrage_scanner - ERROR - Failed to connect to Arbitrum
+2025-04-13 21:43:47,142 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:43:47,204 - blockchain_connector - ERROR - Error connecting to network Optimism: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:43:47,204 - arbitrage_scanner - ERROR - Failed to connect to Optimism
+2025-04-13 21:43:47,232 - apscheduler.executors.default - INFO - Job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:44:16 UTC)" executed successfully
+2025-04-13 21:43:58,460 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2025-04-13 21:43:58,461 - apscheduler.scheduler - DEBUG - Next wakeup is due at 2025-04-13 21:44:13.460647+00:00 (in 14.999357 seconds)
+2025-04-13 21:43:58,461 - apscheduler.executors.default - INFO - Running job "check_network_connections (trigger: interval[0:00:45], next run at: 2025-04-13 21:44:43 UTC)" (scheduled at 2025-04-13 21:43:58.460790+00:00)
+2025-04-13 21:43:58,573 - blockchain_connector - INFO - Connecting to Ethereum...
+2025-04-13 21:43:58,573 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:43:58,573 - blockchain_connector - ERROR - Error connecting to network Ethereum: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:43:58,573 - blockchain_connector - INFO - Connecting to BSC...
+2025-04-13 21:43:58,573 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:43:58,573 - blockchain_connector - ERROR - Error connecting to network BSC: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:43:58,573 - blockchain_connector - INFO - Connecting to Polygon...
+2025-04-13 21:43:58,573 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:43:58,573 - blockchain_connector - ERROR - Error connecting to network Polygon: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:43:58,573 - blockchain_connector - INFO - Connecting to Arbitrum...
+2025-04-13 21:43:58,574 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:43:58,574 - blockchain_connector - ERROR - Error connecting to network Arbitrum: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:43:58,574 - blockchain_connector - INFO - Connecting to Optimism...
+2025-04-13 21:43:58,574 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:43:58,574 - blockchain_connector - ERROR - Error connecting to network Optimism: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:43:58,574 - blockchain_connector - INFO - Network connection check completed
+2025-04-13 21:43:58,574 - apscheduler.executors.default - INFO - Job "check_network_connections (trigger: interval[0:00:45], next run at: 2025-04-13 21:44:43 UTC)" executed successfully
+2025-04-13 21:44:01,790 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2025-04-13 21:44:01,790 - apscheduler.scheduler - DEBUG - Next wakeup is due at 2025-04-13 21:44:16.789821+00:00 (in 14.999300 seconds)
+2025-04-13 21:44:01,790 - apscheduler.executors.default - INFO - Running job "check_network_connections (trigger: interval[0:00:45], next run at: 2025-04-13 21:44:46 UTC)" (scheduled at 2025-04-13 21:44:01.790047+00:00)
+2025-04-13 21:44:01,903 - blockchain_connector - INFO - Connecting to Ethereum...
+2025-04-13 21:44:01,903 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:44:01,904 - blockchain_connector - ERROR - Error connecting to network Ethereum: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:01,904 - blockchain_connector - INFO - Connecting to BSC...
+2025-04-13 21:44:01,904 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:44:01,904 - blockchain_connector - ERROR - Error connecting to network BSC: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:01,904 - blockchain_connector - INFO - Connecting to Polygon...
+2025-04-13 21:44:01,904 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:44:01,904 - blockchain_connector - ERROR - Error connecting to network Polygon: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:01,904 - blockchain_connector - INFO - Connecting to Arbitrum...
+2025-04-13 21:44:01,904 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:44:01,904 - blockchain_connector - ERROR - Error connecting to network Arbitrum: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:01,904 - blockchain_connector - INFO - Connecting to Optimism...
+2025-04-13 21:44:01,904 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:44:01,904 - blockchain_connector - ERROR - Error connecting to network Optimism: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:01,904 - blockchain_connector - INFO - Network connection check completed
+2025-04-13 21:44:01,904 - apscheduler.executors.default - INFO - Job "check_network_connections (trigger: interval[0:00:45], next run at: 2025-04-13 21:44:46 UTC)" executed successfully
+2025-04-13 21:44:06,361 - werkzeug - INFO - 10.81.5.149 - - [13/Apr/2025 21:44:06] "GET /api/opportunities HTTP/1.1" 200 -
+2025-04-13 21:44:06,380 - werkzeug - INFO - 10.81.7.104 - - [13/Apr/2025 21:44:06] "GET /api/transactions HTTP/1.1" 200 -
+2025-04-13 21:44:06,382 - werkzeug - INFO - 10.81.2.33 - - [13/Apr/2025 21:44:06] "GET /api/mining/stats HTTP/1.1" 200 -
+2025-04-13 21:44:13,460 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2025-04-13 21:44:13,461 - apscheduler.scheduler - DEBUG - Next wakeup is due at 2025-04-13 21:44:43.460647+00:00 (in 29.999469 seconds)
+2025-04-13 21:44:13,461 - apscheduler.executors.default - INFO - Running job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:44:43 UTC)" (scheduled at 2025-04-13 21:44:13.460647+00:00)
+2025-04-13 21:44:13,462 - apscheduler.executors.default - INFO - Running job "update_bot_status (trigger: interval[0:01:00], next run at: 2025-04-13 21:45:13 UTC)" (scheduled at 2025-04-13 21:44:13.460881+00:00)
+2025-04-13 21:44:13,462 - utils - ERROR - Error updating bot status: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:13,462 - apscheduler.executors.default - INFO - Job "update_bot_status (trigger: interval[0:01:00], next run at: 2025-04-13 21:45:13 UTC)" executed successfully
+2025-04-13 21:44:13,545 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:44:13,602 - blockchain_connector - ERROR - Error connecting to network Ethereum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:13,603 - arbitrage_scanner - ERROR - Failed to connect to Ethereum
+2025-04-13 21:44:13,603 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:44:13,660 - blockchain_connector - ERROR - Error connecting to network BSC: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:13,660 - arbitrage_scanner - ERROR - Failed to connect to BSC
+2025-04-13 21:44:13,660 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:44:13,718 - blockchain_connector - ERROR - Error connecting to network Polygon: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:13,718 - arbitrage_scanner - ERROR - Failed to connect to Polygon
+2025-04-13 21:44:13,719 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:44:13,776 - blockchain_connector - ERROR - Error connecting to network Arbitrum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:13,776 - arbitrage_scanner - ERROR - Failed to connect to Arbitrum
+2025-04-13 21:44:13,776 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:44:13,834 - blockchain_connector - ERROR - Error connecting to network Optimism: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:13,834 - arbitrage_scanner - ERROR - Failed to connect to Optimism
+2025-04-13 21:44:13,862 - apscheduler.executors.default - INFO - Job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:44:43 UTC)" executed successfully
+2025-04-13 21:44:16,790 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2025-04-13 21:44:16,790 - apscheduler.scheduler - DEBUG - Next wakeup is due at 2025-04-13 21:44:16.790202+00:00 (in 0.000000 seconds)
+2025-04-13 21:44:16,790 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2025-04-13 21:44:16,790 - apscheduler.scheduler - DEBUG - Next wakeup is due at 2025-04-13 21:44:46.789821+00:00 (in 29.999404 seconds)
+2025-04-13 21:44:16,790 - apscheduler.executors.default - INFO - Running job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:44:46 UTC)" (scheduled at 2025-04-13 21:44:16.789821+00:00)
+2025-04-13 21:44:16,790 - apscheduler.executors.default - INFO - Running job "update_bot_status (trigger: interval[0:01:00], next run at: 2025-04-13 21:45:16 UTC)" (scheduled at 2025-04-13 21:44:16.790202+00:00)
+2025-04-13 21:44:16,791 - utils - ERROR - Error updating bot status: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:16,791 - apscheduler.executors.default - INFO - Job "update_bot_status (trigger: interval[0:01:00], next run at: 2025-04-13 21:45:16 UTC)" executed successfully
+2025-04-13 21:44:16,875 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:44:16,933 - blockchain_connector - ERROR - Error connecting to network Ethereum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:16,933 - arbitrage_scanner - ERROR - Failed to connect to Ethereum
+2025-04-13 21:44:16,933 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:44:16,991 - blockchain_connector - ERROR - Error connecting to network BSC: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:16,991 - arbitrage_scanner - ERROR - Failed to connect to BSC
+2025-04-13 21:44:16,991 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:44:17,049 - blockchain_connector - ERROR - Error connecting to network Polygon: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:17,049 - arbitrage_scanner - ERROR - Failed to connect to Polygon
+2025-04-13 21:44:17,049 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:44:17,108 - blockchain_connector - ERROR - Error connecting to network Arbitrum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:17,108 - arbitrage_scanner - ERROR - Failed to connect to Arbitrum
+2025-04-13 21:44:17,108 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:44:17,165 - blockchain_connector - ERROR - Error connecting to network Optimism: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:17,165 - arbitrage_scanner - ERROR - Failed to connect to Optimism
+2025-04-13 21:44:17,193 - apscheduler.executors.default - INFO - Job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:44:46 UTC)" executed successfully
+2025-04-13 21:44:21,423 - werkzeug - INFO - 10.81.6.52 - - [13/Apr/2025 21:44:21] "GET /api/transactions HTTP/1.1" 200 -
+2025-04-13 21:44:36,787 - werkzeug - INFO - 10.81.7.104 - - [13/Apr/2025 21:44:36] "GET /api/opportunities HTTP/1.1" 200 -
+2025-04-13 21:44:36,787 - werkzeug - INFO - 10.81.2.33 - - [13/Apr/2025 21:44:36] "GET /api/mining/stats HTTP/1.1" 200 -
+2025-04-13 21:44:36,787 - werkzeug - INFO - 10.81.5.149 - - [13/Apr/2025 21:44:36] "GET /api/transactions HTTP/1.1" 200 -
+2025-04-13 21:44:43,460 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2025-04-13 21:44:43,461 - apscheduler.scheduler - DEBUG - Next wakeup is due at 2025-04-13 21:45:13.460647+00:00 (in 29.999535 seconds)
+2025-04-13 21:44:43,461 - apscheduler.executors.default - INFO - Running job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:45:13 UTC)" (scheduled at 2025-04-13 21:44:43.460647+00:00)
+2025-04-13 21:44:43,461 - apscheduler.executors.default - INFO - Running job "check_network_connections (trigger: interval[0:00:45], next run at: 2025-04-13 21:45:28 UTC)" (scheduled at 2025-04-13 21:44:43.460790+00:00)
+2025-04-13 21:44:43,545 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:44:43,574 - blockchain_connector - INFO - Connecting to Ethereum...
+2025-04-13 21:44:43,574 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:44:43,574 - blockchain_connector - ERROR - Error connecting to network Ethereum: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:43,574 - blockchain_connector - INFO - Connecting to BSC...
+2025-04-13 21:44:43,574 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:44:43,574 - blockchain_connector - ERROR - Error connecting to network BSC: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:43,574 - blockchain_connector - INFO - Connecting to Polygon...
+2025-04-13 21:44:43,574 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:44:43,574 - blockchain_connector - ERROR - Error connecting to network Polygon: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:43,575 - blockchain_connector - INFO - Connecting to Arbitrum...
+2025-04-13 21:44:43,575 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:44:43,575 - blockchain_connector - ERROR - Error connecting to network Arbitrum: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:43,575 - blockchain_connector - INFO - Connecting to Optimism...
+2025-04-13 21:44:43,575 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:44:43,575 - blockchain_connector - ERROR - Error connecting to network Optimism: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:43,575 - blockchain_connector - INFO - Network connection check completed
+2025-04-13 21:44:43,575 - apscheduler.executors.default - INFO - Job "check_network_connections (trigger: interval[0:00:45], next run at: 2025-04-13 21:45:28 UTC)" executed successfully
+2025-04-13 21:44:43,603 - blockchain_connector - ERROR - Error connecting to network Ethereum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:43,604 - arbitrage_scanner - ERROR - Failed to connect to Ethereum
+2025-04-13 21:44:43,604 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:44:43,663 - blockchain_connector - ERROR - Error connecting to network BSC: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:43,663 - arbitrage_scanner - ERROR - Failed to connect to BSC
+2025-04-13 21:44:43,663 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:44:43,722 - blockchain_connector - ERROR - Error connecting to network Polygon: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:43,722 - arbitrage_scanner - ERROR - Failed to connect to Polygon
+2025-04-13 21:44:43,722 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:44:43,780 - blockchain_connector - ERROR - Error connecting to network Arbitrum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:43,780 - arbitrage_scanner - ERROR - Failed to connect to Arbitrum
+2025-04-13 21:44:43,780 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:44:43,837 - blockchain_connector - ERROR - Error connecting to network Optimism: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:43,837 - arbitrage_scanner - ERROR - Failed to connect to Optimism
+2025-04-13 21:44:43,865 - apscheduler.executors.default - INFO - Job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:45:13 UTC)" executed successfully
+2025-04-13 21:44:46,790 - apscheduler.scheduler - DEBUG - Looking for jobs to run
+2025-04-13 21:44:46,790 - apscheduler.scheduler - DEBUG - Next wakeup is due at 2025-04-13 21:45:16.789821+00:00 (in 29.999482 seconds)
+2025-04-13 21:44:46,790 - apscheduler.executors.default - INFO - Running job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:45:16 UTC)" (scheduled at 2025-04-13 21:44:46.789821+00:00)
+2025-04-13 21:44:46,791 - apscheduler.executors.default - INFO - Running job "check_network_connections (trigger: interval[0:00:45], next run at: 2025-04-13 21:45:31 UTC)" (scheduled at 2025-04-13 21:44:46.790047+00:00)
+2025-04-13 21:44:46,875 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to Ethereum...
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to Ethereum in PRODUCTION mode
+2025-04-13 21:44:46,902 - blockchain_connector - ERROR - Error connecting to network Ethereum: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to BSC...
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:44:46,902 - blockchain_connector - ERROR - Error connecting to network BSC: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to Polygon...
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:44:46,902 - blockchain_connector - ERROR - Error connecting to network Polygon: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to Arbitrum...
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:44:46,902 - blockchain_connector - ERROR - Error connecting to network Arbitrum: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to Optimism...
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:44:46,902 - blockchain_connector - ERROR - Error connecting to network Optimism: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-04-13 21:44:46,902 - blockchain_connector - INFO - Network connection check completed
+2025-04-13 21:44:46,902 - apscheduler.executors.default - INFO - Job "check_network_connections (trigger: interval[0:00:45], next run at: 2025-04-13 21:45:31 UTC)" executed successfully
+2025-04-13 21:44:46,933 - blockchain_connector - ERROR - Error connecting to network Ethereum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:46,933 - arbitrage_scanner - ERROR - Failed to connect to Ethereum
+2025-04-13 21:44:46,933 - blockchain_connector - INFO - Connecting to BSC in PRODUCTION mode
+2025-04-13 21:44:46,992 - blockchain_connector - ERROR - Error connecting to network BSC: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:46,992 - arbitrage_scanner - ERROR - Failed to connect to BSC
+2025-04-13 21:44:46,992 - blockchain_connector - INFO - Connecting to Polygon in PRODUCTION mode
+2025-04-13 21:44:47,051 - blockchain_connector - ERROR - Error connecting to network Polygon: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:47,051 - arbitrage_scanner - ERROR - Failed to connect to Polygon
+2025-04-13 21:44:47,051 - blockchain_connector - INFO - Connecting to Arbitrum in PRODUCTION mode
+2025-04-13 21:44:47,110 - blockchain_connector - ERROR - Error connecting to network Arbitrum: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:47,110 - arbitrage_scanner - ERROR - Failed to connect to Arbitrum
+2025-04-13 21:44:47,111 - blockchain_connector - INFO - Connecting to Optimism in PRODUCTION mode
+2025-04-13 21:44:47,169 - blockchain_connector - ERROR - Error connecting to network Optimism: module 'web3.middleware.cache' has no attribute 'simple_cache_middleware'
+2025-04-13 21:44:47,169 - arbitrage_scanner - ERROR - Failed to connect to Optimism
+2025-04-13 21:44:47,197 - apscheduler.executors.default - INFO - Job "iniciar_escaneamento (trigger: interval[0:00:30], next run at: 2025-04-13 21:45:16 UTC)" executed successfully
+2025-04-13 21:44:49,350 - werkzeug - INFO - 10.81.7.104 - - [13/Apr/2025 21:44:49] "GET /api/opportunities HTTP/1.1" 200 -
+2025-04-13 21:44:49,351 - werkzeug - INFO - 10.81.5.149 - - [13/Apr/2025 21:44:49] "GET /api/mining/stats HTTP/1.1" 200 -
+2025-04-13 21:44:49,353 - werkzeug - INFO - 10.81.2.33 - - [13/Apr/2025 21:44:49] "GET /api/transactions HTTP/1.1" 200 -

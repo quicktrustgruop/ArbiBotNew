@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+
+{% block title %}Transactions - Crypto Arbitrage Bot{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Transactions</h1>
+</div>
+
+<!-- Transaction Stats -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-exchange-alt stat-card-icon primary"></i>
+                <div class="stat-card-title">Total Transactions</div>
+                <div id="total-tx-count" class="stat-card-value">{{ transactions|length }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-check-circle stat-card-icon success"></i>
+                <div class="stat-card-title">Successful</div>
+                <div id="successful-tx-count" class="stat-card-value success">
+                    {{ transactions|selectattr('status', 'equalto', 'successful')|list|length }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-times-circle stat-card-icon danger"></i>
+                <div class="stat-card-title">Failed</div>
+                <div id="failed-tx-count" class="stat-card-value danger">
+                    {{ transactions|selectattr('status', 'equalto', 'failed')|list|length }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-percent stat-card-icon warning"></i>
+                <div class="stat-card-title">Success Rate</div>
+                <div id="success-rate" class="stat-card-value warning">
+                    {% if transactions|length > 0 %}
+                        {{ ((transactions|selectattr('status', 'equalto', 'successful')|list|length / transactions|length) * 100)|round(1) }}%
+                    {% else %}
+                        0.0%
+                    {% endif %}
+                </div>
+                <!-- Success Rate Progress Bar -->
+                <div class="progress mt-2">
+                    <div id="success-rate-bar" class="progress-bar 
+                        {% if (transactions|selectattr('status', 'equalto', 'successful')|list|length / transactions|length if transactions|length > 0 else 0) * 100 >= 80 %}success
+                        {% elif (transactions|selectattr('status', 'equalto', 'successful')|list|length / transactions|length if transactions|length > 0 else 0) * 100 >= 50 %}warning
+                        {% else %}danger{% endif %}" 
+                        style="width: {{ (transactions|selectattr('status', 'equalto', 'successful')|list|length / transactions|length if transactions|length > 0 else 0) * 100 }}%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Stats -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-dollar-sign stat-card-icon success"></i>
+                <div class="stat-card-title">Total Profit</div>
+                <div id="total-profit" class="stat-card-value success">
+                    ${{ transactions|selectattr('status', 'equalto', 'successful')|sum(attribute='net_profit')|round(2) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-chart-line stat-card-icon info"></i>
+                <div class="stat-card-title">Average Profit</div>
+                <div id="average-profit" class="stat-card-value info">
+                    {% set successful = transactions|selectattr('status', 'equalto', 'successful')|list %}
+                    {% if successful|length > 0 %}
+                        ${{ (successful|sum(attribute='net_profit') / successful|length)|round(2) }}
+                    {% else %}
+                        $0.00
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-fire stat-card-icon warning"></i>
+                <div class="stat-card-title">Total Gas Cost</div>
+                <div id="total-gas-cost" class="stat-card-value warning">
+                    ${{ transactions|sum(attribute='gas_cost')|round(6) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-bolt stat-card-icon primary"></i>
+                <div class="stat-card-title">Flash Loans</div>
+                <div class="stat-card-value primary">
+                    {{ transactions|selectattr('status', 'equalto', 'successful')|list|length }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transaction Charts -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <!-- Profit by Network Chart -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Profit by Network</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="profit-by-network-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <!-- Profit Over Time Chart -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Profit Over Time</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="profit-over-time-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transaction Filters -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Filters</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group mb-3">
+                    <label for="network-filter" class="form-label">Network</label>
+                    <select class="form-control" id="network-filter">
+                        <option value="all">All Networks</option>
+                        <option value="ethereum">Ethereum</option>
+                        <option value="bsc">BSC</option>
+                        <option value="polygon">Polygon</option>
+                        <option value="arbitrum">Arbitrum</option>
+                        <option value="optimism">Optimism</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="form-group mb-3">
+                    <label for="status-filter" class="form-label">Status</label>
+                    <select class="form-control" id="status-filter">
+                        <option value="all">All Statuses</option>
+                        <option value="successful">Successful</option>
+                        <option value="failed">Failed</option>
+                        <option value="processing">Processing</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="form-group mb-3">
+                    <label for="date-filter" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="date-filter">
+                </div>
+            </div>
+            
+            <div class="col-md-3 d-flex align-items-end">
+                <button id="apply-filter" class="btn btn-primary me-2">Apply Filters</button>
+                <button id="reset-filter" class="btn btn-secondary">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transactions Table -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">All Transactions</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" id="transactions-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Network</th>
+                        <th>Token Pair</th>
+                        <th>Route</th>
+                        <th>Buy Amount</th>
+                        <th>Gas Cost</th>
+                        <th>Net Profit</th>
+                        <th>Timestamp</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if transactions %}
+                        {% for tx in transactions %}
+                            <tr>
+                                <td>{{ tx.id }}</td>
+                                <td>{{ tx.network }}</td>
+                                <td>{{ tx.token_pair }}</td>
+                                <td>{{ tx.buy_dex }} → {{ tx.sell_dex }}</td>
+                                <td>${{ "%.2f"|format(tx.buy_amount) }}</td>
+                                <td>${{ "%.6f"|format(tx.gas_cost) }}</td>
+                                <td>${{ "%.2f"|format(tx.net_profit) }} <small>({{ ((tx.net_profit / tx.buy_amount) * 100)|round(2) if tx.buy_amount > 0 else 'N/A' }}%)</small></td>
+                                <td>{{ tx.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>
+                                    <span class="status-pill 
+                                        {% if tx.status == 'successful' %}success
+                                        {% elif tx.status == 'failed' %}danger
+                                        {% elif tx.status == 'processing' %}warning
+                                        {% else %}info{% endif %}">
+                                        {{ tx.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if tx.tx_hash %}
+                                        <button class="btn btn-sm btn-primary view-tx" data-tx-id="{{ tx.id }}">View</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="10" class="text-center">No transactions found</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/transactions.js') }}"></script>
+{% endblock %}

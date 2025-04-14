@@ -1,0 +1,149 @@
+/* Custom CSS for Crypto Arbitrage Bot */
+
+/* Status indicators */
+.status-indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--bs-danger);
+    display: inline-block;
+}
+
+.status-indicator.active {
+    background-color: var(--bs-success);
+    box-shadow: 0 0 8px var(--bs-success);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-success-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(var(--bs-success-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-success-rgb), 0);
+    }
+}
+
+/* Network status indicators */
+.network-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--bs-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bs-gray-500);
+    font-size: 1.5rem;
+}
+
+.network-icon.active {
+    color: var(--bs-primary);
+    box-shadow: 0 0 5px var(--bs-primary);
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Tables */
+.table tbody tr {
+    transition: background-color 0.2s;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+/* Fix text overflow in tables */
+.text-truncate {
+    max-width: 150px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Custom badges */
+.badge {
+    font-weight: 500;
+    padding: 0.4em 0.7em;
+}
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    background-color: var(--bs-dark);
+}
+
+/* Custom alert styling */
+.alert {
+    border-radius: 0.5rem;
+    border: none;
+}
+
+/* Transaction Hash styling */
+.transaction-hash {
+    font-family: monospace;
+    background-color: rgba(var(--bs-dark-rgb), 0.2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+/* Custom form controls */
+.form-control, .form-select {
+    background-color: var(--bs-dark);
+    border-color: var(--bs-gray-700);
+    color: var(--bs-light);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+}
+
+/* Tooltip custom styling */
+.tooltip .tooltip-inner {
+    background-color: var(--bs-dark);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+/* Modal custom styling */
+.modal-content {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+/* Loading indicators */
+.loading-spinner {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Profit gradient for positive values */
+.profit-positive {
+    color: var(--bs-success);
+    font-weight: bold;
+}
+
+/* Loss gradient for negative values */
+.profit-negative {
+    color: var(--bs-danger);
+    font-weight: bold;
+}

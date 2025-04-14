@@ -1,0 +1,362 @@
+{% extends "base.html" %}
+
+{% block title %}Transações - Crypto Arbitrage Bot{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Histórico de Transações</h1>
+    </div>
+    
+    <!-- Transaction Stats -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card stat-card success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted">Transações Bem-sucedidas</h6>
+                            <h4>{{ completed_trades|selectattr('status', 'equalto', 'completed')|list|length }}</h4>
+                        </div>
+                        <i class="fas fa-check-circle fa-2x text-success opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card stat-card danger">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted">Transações Falhas</h6>
+                            <h4>{{ completed_trades|selectattr('status', 'equalto', 'failed')|list|length }}</h4>
+                        </div>
+                        <i class="fas fa-times-circle fa-2x text-danger opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card stat-card primary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted">Transações em Andamento</h6>
+                            <h4>{{ active_trades|length }}</h4>
+                        </div>
+                        <i class="fas fa-spinner fa-spin fa-2x text-primary opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card stat-card warning">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted">Lucro Total</h6>
+                            <h4>
+                                {% set total_profit = 0 %}
+                                {% for trade in completed_trades if trade.status == 'completed' %}
+                                    {% set total_profit = total_profit + trade.profit_usd %}
+                                {% endfor %}
+                                ${{ total_profit|round(2) }}
+                            </h4>
+                        </div>
+                        <i class="fas fa-dollar-sign fa-2x text-warning opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Active Transactions -->
+    {% if active_trades %}
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">Transações Ativas</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Iniciado</th>
+                            <th>Tipo</th>
+                            <th>Rede</th>
+                            <th>Status</th>
+                            <th>Hash</th>
+                            <th>Detalhes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trade in active_trades %}
+                        <tr>
+                            <td>{{ trade.id }}</td>
+                            <td>{{ trade.timestamp }}</td>
+                            <td>{{ trade.type }}</td>
+                            <td><span class="badge bg-info">{{ trade.network }}</span></td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <span>Em Andamento</span>
+                                </div>
+                            </td>
+                            <td>
+                                {% if trade.tx_hash %}
+                                <span class="text-truncate d-inline-block" style="max-width: 150px;">{{ trade.tx_hash }}</span>
+                                {% else %}
+                                <span class="text-muted">Pendente</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionModal" data-id="{{ trade.id }}">
+                                    Detalhes
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Completed Transactions -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">Transações Concluídas</h5>
+            <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-outline-secondary active">Tudo</button>
+                <button type="button" class="btn btn-outline-secondary">Sucesso</button>
+                <button type="button" class="btn btn-outline-secondary">Falha</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data/Hora</th>
+                            <th>Tipo</th>
+                            <th>Rede</th>
+                            <th>Status</th>
+                            <th>Lucro</th>
+                            <th>Custo Gas</th>
+                            <th>Hash</th>
+                            <th>Detalhes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if completed_trades %}
+                            {% for trade in completed_trades %}
+                            <tr>
+                                <td>{{ trade.id }}</td>
+                                <td>{{ trade.timestamp }}</td>
+                                <td>{{ trade.type }}</td>
+                                <td><span class="badge bg-info">{{ trade.network }}</span></td>
+                                <td>
+                                    {% if trade.status == 'completed' %}
+                                    <span class="badge bg-success">Sucesso</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Falha</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if trade.status == 'completed' %}
+                                    <span class="text-success">${{ trade.profit_usd|round(2) }}</span>
+                                    {% else %}
+                                    <span class="text-muted">N/A</span>
+                                    {% endif %}
+                                </td>
+                                <td>${{ trade.gas_cost_usd|round(2) }}</td>
+                                <td>
+                                    {% if trade.tx_hash %}
+                                    <span class="text-truncate d-inline-block" style="max-width: 150px;">
+                                        <a href="#" title="{{ trade.tx_hash }}" class="text-info">{{ trade.tx_hash }}</a>
+                                    </span>
+                                    {% else %}
+                                    <span class="text-muted">N/A</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionModal" data-id="{{ trade.id }}">
+                                        Detalhes
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="9" class="text-center">Nenhuma transação concluída</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transaction Details Modal -->
+<div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transactionModalLabel">Detalhes da Transação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-3" id="modal-loading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Carregando detalhes da transação...</p>
+                </div>
+                <div id="transaction-details" style="display: none;">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>ID da Transação:</strong> <span id="modal-id"></span></p>
+                            <p><strong>Tipo:</strong> <span id="modal-type"></span></p>
+                            <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                            <p><strong>Data/Hora:</strong> <span id="modal-timestamp"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Rede:</strong> <span id="modal-network"></span></p>
+                            <p><strong>Lucro:</strong> <span id="modal-profit"></span></p>
+                            <p><strong>Custo de Gas:</strong> <span id="modal-gas"></span></p>
+                            <p><strong>Hash da Transação:</strong> <a href="#" id="modal-hash-link" target="_blank"><span id="modal-hash"></span></a></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>Detalhes Adicionais</h6>
+                            <div class="card">
+                                <div class="card-body">
+                                    <pre id="modal-details" class="language-json" style="max-height: 300px; overflow-y: auto;"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="transaction-error" class="alert alert-danger" style="display: none;">
+                    Erro ao carregar os detalhes da transação.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const transactionModal = document.getElementById('transactionModal');
+        
+        transactionModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const transactionId = button.getAttribute('data-id');
+            
+            // Reset modal state
+            document.getElementById('modal-loading').style.display = 'block';
+            document.getElementById('transaction-details').style.display = 'none';
+            document.getElementById('transaction-error').style.display = 'none';
+            
+            // For demonstration purposes, we're using a timeout to simulate loading
+            // In a real app, you would fetch transaction details from an API
+            setTimeout(function() {
+                // Find the transaction in the list of completed or active trades
+                const transaction = findTransaction(transactionId);
+                
+                if (transaction) {
+                    // Populate modal with transaction details
+                    document.getElementById('modal-id').textContent = transaction.id;
+                    document.getElementById('modal-type').textContent = transaction.type;
+                    document.getElementById('modal-status').textContent = transaction.status === 'completed' ? 'Sucesso' : (transaction.status === 'failed' ? 'Falha' : 'Em Andamento');
+                    document.getElementById('modal-status').className = transaction.status === 'completed' ? 'text-success' : (transaction.status === 'failed' ? 'text-danger' : 'text-primary');
+                    document.getElementById('modal-timestamp').textContent = transaction.timestamp;
+                    document.getElementById('modal-network').textContent = transaction.network;
+                    document.getElementById('modal-profit').textContent = transaction.status === 'completed' ? '$' + transaction.profit_usd.toFixed(2) : 'N/A';
+                    document.getElementById('modal-gas').textContent = '$' + transaction.gas_cost_usd.toFixed(2);
+                    
+                    if (transaction.tx_hash) {
+                        document.getElementById('modal-hash').textContent = transaction.tx_hash;
+                        document.getElementById('modal-hash-link').href = getExplorerUrl(transaction.network, transaction.tx_hash);
+                        document.getElementById('modal-hash-link').style.display = 'inline';
+                    } else {
+                        document.getElementById('modal-hash').textContent = 'N/A';
+                        document.getElementById('modal-hash-link').style.display = 'none';
+                    }
+                    
+                    // Format and display JSON details
+                    if (transaction.details) {
+                        document.getElementById('modal-details').textContent = JSON.stringify(transaction.details, null, 2);
+                    } else {
+                        document.getElementById('modal-details').textContent = 'Nenhum detalhe adicional disponível.';
+                    }
+                    
+                    document.getElementById('modal-loading').style.display = 'none';
+                    document.getElementById('transaction-details').style.display = 'block';
+                } else {
+                    document.getElementById('modal-loading').style.display = 'none';
+                    document.getElementById('transaction-error').style.display = 'block';
+                }
+            }, 500);
+        });
+        
+        // Helper function to find a transaction by ID in the list of completed or active trades
+        function findTransaction(id) {
+            // This is a placeholder. In a real app, you would fetch this from an API
+            // For now, we'll simulate it
+            return {
+                id: id,
+                timestamp: '2025-04-13 10:30:00',
+                type: 'Flash Loan Arbitrage',
+                network: 'Ethereum',
+                status: 'completed',
+                profit_usd: 45.23,
+                gas_cost_usd: 12.75,
+                tx_hash: '0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef1234',
+                details: {
+                    token_pair: 'ETH/USDC',
+                    buy_dex: 'Uniswap V3',
+                    sell_dex: 'SushiSwap',
+                    price_diff_percentage: 2.5,
+                    loan_amount: 10,
+                    execution_time_ms: 2500
+                }
+            };
+        }
+        
+        // Helper function to get explorer URL based on network and hash
+        function getExplorerUrl(network, hash) {
+            switch(network.toLowerCase()) {
+                case 'ethereum':
+                    return `https://etherscan.io/tx/${hash}`;
+                case 'binance smart chain':
+                case 'bsc':
+                    return `https://bscscan.com/tx/${hash}`;
+                case 'polygon':
+                    return `https://polygonscan.com/tx/${hash}`;
+                case 'arbitrum':
+                    return `https://arbiscan.io/tx/${hash}`;
+                case 'optimism':
+                    return `https://optimistic.etherscan.io/tx/${hash}`;
+                default:
+                    return '#';
+            }
+        }
+    });
+</script>
+{% endblock %}

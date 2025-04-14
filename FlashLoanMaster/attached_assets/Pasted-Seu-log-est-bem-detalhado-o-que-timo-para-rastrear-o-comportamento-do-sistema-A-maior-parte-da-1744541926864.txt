@@ -1,0 +1,67 @@
+Seu log está bem detalhado, o que é ótimo para rastrear o comportamento do sistema. A maior parte das mensagens indica que tudo está funcionando corretamente, mas há uma repetição da linha:
+
+csharp
+Copiar
+Editar
+[INFO] Handling signal: winch
+Esse tipo de mensagem geralmente vem do Gunicorn (ou outro servidor WSGI) quando está sendo executado com algum gerenciador de processos (como Supervisor ou Docker). O sinal SIGWINCH é normalmente usado para redimensionamento de terminal (em ambientes Unix), mas no contexto de Gunicorn, pode indicar:
+
+Tentativa de ajustar o número de workers
+
+Um processo não interativo tentando responder ao terminal
+
+Ou simplesmente uma mensagem irrelevante que pode ser suprimida
+
+✅ Diagnóstico Rápido:
+A conexão com a BSC e com a Polygon (via Infura) está OK.
+
+6 oportunidades foram detectadas e passaram pelo filtro de risco com sucesso.
+
+As oportunidades foram salvas no banco de dados.
+
+O sinal winch não indica erro, mas pode ser suprimido se não for necessário.
+
+✅ Soluções possíveis:
+✔️ 1. Suprimir os logs winch (se forem apenas ruído):
+Se estiver usando Gunicorn, você pode configurar o nível de log no gunicorn.conf.py:
+
+python
+Copiar
+Editar
+errorlog = '-'
+loglevel = 'info'  # ou 'warning' para reduzir ainda mais
+Ou iniciar o Gunicorn com:
+
+bash
+Copiar
+Editar
+gunicorn app:app --log-level warning
+✔️ 2. Alternativa (caso esteja em Docker ou Supervisor):
+Você pode ignorar esses sinais no entrypoint com:
+
+bash
+Copiar
+Editar
+trap '' SIGWINCH
+🔧 Correção de Estilo do Log:
+Aqui está sua saída com identação ajustada e ruído removido, útil para debugging limpo:
+
+txt
+Copiar
+Editar
+2025-04-13 10:56:51 - blockchain_connector - INFO - Connected to network bsc
+2025-04-13 10:56:51 - arbitrage_scanner - INFO - Scanning network: Binance Smart Chain
+2025-04-13 10:56:51 - blockchain_connector - INFO - Connected to network polygon
+2025-04-13 10:56:51 - arbitrage_scanner - INFO - Scanning network: Polygon
+2025-04-13 10:56:51 - app - INFO - Found 6 arbitrage opportunities
+2025-04-13 10:56:51 - app - INFO - After risk filtering: 6 opportunities remain
+2025-04-13 10:56:51 - app - INFO - Oportunidades salvas no banco de dados
+Se quiser, posso ajustar o código para filtrar logs desnecessários automaticamente, além de implementar log em banco de dados ou arquivos rotativos, com painéis no dashboard para auditoria. Deseja isso também?
+
+Referência para sinal SIGWINCH e Gunicorn:
+
+https://docs.gunicorn.org/en/stable/settings.html#loglevel
+
+https://docs.python.org/3/library/signal.html
+
+Se quiser o plano para ativar execução de flash loans em produção com logs completos e rotinas de fallback, posso gerar agora. Deseja?

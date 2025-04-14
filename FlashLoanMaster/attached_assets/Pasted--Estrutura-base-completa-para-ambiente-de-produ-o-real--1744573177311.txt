@@ -1,0 +1,106 @@
+// Estrutura base completa para ambiente de produção real
+
+// ============================
+// 📁 Estrutura de Pastas
+// ============================
+// .
+// ├── contracts/                 # Contratos inteligentes (Solidity)
+// │   └── ArbitrageBot.sol
+// ├── scripts/                   # Scripts de deploy e execução
+// │   └── runBot.js
+// ├── test/                      # Testes automatizados
+// ├── .env                       # Variáveis de ambiente sensíveis
+// ├── hardhat.config.js          # Configuração Hardhat
+// ├── package.json               # Dependências npm
+// └── README.md
+
+// ============================
+// 📄 .env (NUNCA EXPOR PUBLICAMENTE)
+// ============================
+// Salvar como .env no diretório raiz:
+
+METAMASK_PUBLIC=0x9146A9A5EFb565BF150607170CAc7C8A1b210F69
+METAMASK_PRIVATE=4af10da5e78257fecae8dfbc03cbaf101e7e3560bba96082fc6decfc6601b989
+INFURA_KEY=4d15722322564dfbbb0abe937f76e41a
+NETWORK=mainnet
+
+// ============================
+// 📄 package.json
+// ============================
+{
+  "name": "real-production-bot",
+  "version": "1.0.0",
+  "description": "Bot de arbitragem e mineração em ambiente real",
+  "main": "scripts/runBot.js",
+  "scripts": {
+    "start": "npx hardhat run scripts/runBot.js --network mainnet"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.1",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
+    "web3": "^1.8.2"
+  },
+  "devDependencies": {
+    "hardhat": "^2.17.1"
+  }
+}
+
+// ============================
+// 📄 hardhat.config.js
+// ============================
+require("dotenv").config();
+require("@nomiclabs/hardhat-ethers");
+
+module.exports = {
+  solidity: "0.8.19",
+  defaultNetwork: "mainnet",
+  networks: {
+    mainnet: {
+      url: `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`,
+      accounts: [process.env.METAMASK_PRIVATE]
+    }
+  }
+};
+
+// ============================
+// 📄 contracts/ArbitrageBot.sol (exemplo mínimo)
+// ============================
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+contract ArbitrageBot {
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function execute() public {
+        require(msg.sender == owner, "Somente o dono pode executar");
+        // Inserir lógica de arbitragem real aqui
+    }
+}
+
+// ============================
+// 📄 scripts/runBot.js
+// ============================
+require("dotenv").config();
+const hre = require("hardhat");
+
+async function main() {
+  const [deployer] = await hre.ethers.getSigners();
+  console.log("Executando com conta:", deployer.address);
+
+  const ArbitrageBot = await hre.ethers.getContractFactory("ArbitrageBot");
+  const bot = await ArbitrageBot.deploy();
+  await bot.deployed();
+
+  console.log("Bot implantado em:", bot.address);
+  await bot.execute();
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

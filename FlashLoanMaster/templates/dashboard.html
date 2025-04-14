@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Crypto Arbitrage Bot{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <div class="page-actions">
+        <button id="scan-now" class="btn btn-primary">
+            <i class="fas fa-search"></i> Scan Now
+        </button>
+    </div>
+</div>
+
+<!-- Status Cards -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <!-- Bot Status Card -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Bot Status</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="me-3">
+                        <i class="fas fa-robot fa-3x text-primary"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0">Status: <span id="bot-status" class="{% if bot_status and bot_status.active %}text-success{% else %}text-danger{% endif %}">
+                            {% if bot_status and bot_status.active %}Active{% else %}Inactive{% endif %}
+                        </span></p>
+                        <p class="mb-0">Last Scan: <span id="last-scan-time" data-time="{{ bot_status.last_scan if bot_status and bot_status.last_scan else '' }}">
+                            {% if bot_status and bot_status.last_scan %}
+                                {{ bot_status.last_scan.strftime('%Y-%m-%d %H:%M:%S') }}
+                            {% else %}
+                                Never
+                            {% endif %}
+                        </span></p>
+                    </div>
+                </div>
+                
+                <div class="bot-controls">
+                    <button id="bot-toggle" class="btn {% if bot_status and bot_status.active %}btn-danger{% else %}btn-success{% endif %}" data-status="{% if bot_status and bot_status.active %}active{% else %}inactive{% endif %}">
+                        {% if bot_status and bot_status.active %}Deactivate Bot{% else %}Activate Bot{% endif %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <!-- Cloud Mining Status Card -->
+        <div class="card mining-status-card">
+            <div class="card-header">
+                <h5 class="mb-0">Cloud Mining Status</h5>
+            </div>
+            <div class="card-body">
+                <div class="mining-info">
+                    <div class="mining-stat">
+                        <div class="mining-stat-title">Status</div>
+                        <div id="mining-status" class="mining-stat-value {% if mining_status and mining_status.active %}text-success{% else %}text-danger{% endif %}">
+                            {% if mining_status and mining_status.active %}Active{% else %}Inactive{% endif %}
+                        </div>
+                    </div>
+                    <div class="mining-stat">
+                        <div class="mining-stat-title">Total Hash Power</div>
+                        <div id="hash-power" class="mining-stat-value">
+                            {% if mining_status %}{{ mining_status.total_hash_power }} TH/s{% else %}0 TH/s{% endif %}
+                        </div>
+                    </div>
+                    <div class="mining-stat">
+                        <div class="mining-stat-title">Active Workers</div>
+                        <div id="active-workers" class="mining-stat-value">
+                            {% if mining_status %}{{ mining_status.active_workers }}{% else %}0{% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mining-info mt-3">
+                    <div class="mining-stat">
+                        <div class="mining-stat-title">24h Revenue</div>
+                        <div id="mining-revenue" class="mining-stat-value">
+                            ${% if mining_status %}{{ "%.2f"|format(mining_status.mining_revenue_24h) }}{% else %}0.00{% endif %}
+                        </div>
+                    </div>
+                    <div class="mining-stat">
+                        <div class="mining-stat-title">Efficiency</div>
+                        <div id="mining-efficiency" class="mining-stat-value">
+                            {% if mining_status %}{{ mining_status.efficiency }}%{% else %}0%{% endif %}
+                        </div>
+                    </div>
+                    <div class="mining-stat">
+                        <div class="mining-stat-title">Total Profit</div>
+                        <div id="total-profit" class="mining-stat-value">
+                            ${% if mining_status %}{{ "%.2f"|format(mining_status.total_profit) }}{% else %}0.00{% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Efficiency Bar -->
+                <div class="mt-3">
+                    <p class="mb-1">Mining Efficiency</p>
+                    <div class="progress">
+                        <div id="efficiency-bar" class="progress-bar {% if mining_status and mining_status.efficiency >= 75 %}success{% elif mining_status and mining_status.efficiency >= 40 %}warning{% else %}danger{% endif %}" 
+                             style="width: {% if mining_status %}{{ mining_status.efficiency }}{% else %}0{% endif %}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats & Charts Row -->
+<div class="row mb-4">
+    <div class="col-lg-8">
+        <!-- Profit Chart -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Profit Chart</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="profit-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <!-- Network Distribution Chart -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Network Distribution</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="network-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Row -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-search-dollar stat-card-icon info"></i>
+                <div class="stat-card-title">Detected Opportunities</div>
+                <div id="opportunities-count" class="stat-card-value info">{{ opportunities|length }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-exchange-alt stat-card-icon success"></i>
+                <div class="stat-card-title">Successful Transactions</div>
+                <div id="successful-tx-count" class="stat-card-value success">{{ successful_transactions }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-times-circle stat-card-icon danger"></i>
+                <div class="stat-card-title">Failed Transactions</div>
+                <div id="failed-tx-count" class="stat-card-value danger">{{ failed_transactions }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-network-wired stat-card-icon warning"></i>
+                <div class="stat-card-title">Active Networks</div>
+                <div class="stat-card-value warning">5</div>
+                <small>ETH, BSC, POLYGON, ARBITRUM, OPTIMISM</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Latest Opportunities -->
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Latest Arbitrage Opportunities</h5>
+        <a href="{{ url_for('opportunities') }}" class="btn btn-sm btn-primary">View All</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" id="opportunities-table">
+                <thead>
+                    <tr>
+                        <th>Network</th>
+                        <th>Token Pair</th>
+                        <th>Route</th>
+                        <th>Difference</th>
+                        <th>Expected Profit</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if opportunities %}
+                        {% for opp in opportunities %}
+                            <tr>
+                                <td>{{ opp.network }}</td>
+                                <td>{{ opp.token_pair }}</td>
+                                <td>{{ opp.buy_dex }} → {{ opp.sell_dex }}</td>
+                                <td>{{ "%.2f"|format(opp.price_difference_percent) }}%</td>
+                                <td>${{ "%.2f"|format(opp.expected_profit) }}</td>
+                                <td>
+                                    <span class="status-pill 
+                                        {% if opp.status == 'executed' %}success
+                                        {% elif opp.status == 'failed' %}danger
+                                        {% elif opp.status == 'processing' %}warning
+                                        {% else %}info{% endif %}">
+                                        {{ opp.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center">No arbitrage opportunities found</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Latest Transactions -->
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Latest Transactions</h5>
+        <a href="{{ url_for('transactions') }}" class="btn btn-sm btn-primary">View All</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" id="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Network</th>
+                        <th>Token Pair</th>
+                        <th>Net Profit</th>
+                        <th>Timestamp</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set transactions = [] %}
+                    {% if transactions %}
+                        {% for tx in transactions[:5] %}
+                            <tr>
+                                <td>{{ tx.network }}</td>
+                                <td>{{ tx.token_pair }}</td>
+                                <td>${{ "%.2f"|format(tx.net_profit) }}</td>
+                                <td>{{ tx.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>
+                                    <span class="status-pill 
+                                        {% if tx.status == 'successful' %}success
+                                        {% elif tx.status == 'failed' %}danger
+                                        {% elif tx.status == 'processing' %}warning
+                                        {% else %}info{% endif %}">
+                                        {{ tx.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">No transactions executed yet</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

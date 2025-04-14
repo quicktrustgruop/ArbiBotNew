@@ -1,0 +1,510 @@
+{% extends "base.html" %}
+
+{% block title %}Configurações - Crypto Arbitrage Bot{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Configurações</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <button type="button" class="btn btn-sm btn-outline-primary me-2" id="save-all-settings">
+                <i class="fas fa-save"></i> Salvar Todas as Alterações
+            </button>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group mb-4" id="settings-tabs" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="general-tab" data-bs-toggle="list" href="#general" role="tab" aria-controls="general">
+                    <i class="fas fa-cog me-2"></i> Geral
+                </a>
+                <a class="list-group-item list-group-item-action" id="trading-tab" data-bs-toggle="list" href="#trading" role="tab" aria-controls="trading">
+                    <i class="fas fa-chart-line me-2"></i> Trading
+                </a>
+                <a class="list-group-item list-group-item-action" id="networks-tab" data-bs-toggle="list" href="#networks" role="tab" aria-controls="networks">
+                    <i class="fas fa-network-wired me-2"></i> Redes
+                </a>
+                <a class="list-group-item list-group-item-action" id="dex-tab" data-bs-toggle="list" href="#dex" role="tab" aria-controls="dex">
+                    <i class="fas fa-exchange-alt me-2"></i> DEXs
+                </a>
+                <a class="list-group-item list-group-item-action" id="ai-tab" data-bs-toggle="list" href="#ai" role="tab" aria-controls="ai">
+                    <i class="fas fa-brain me-2"></i> IA
+                </a>
+                <a class="list-group-item list-group-item-action" id="notifications-tab" data-bs-toggle="list" href="#notifications" role="tab" aria-controls="notifications">
+                    <i class="fas fa-bell me-2"></i> Notificações
+                </a>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="tab-content">
+                <!-- General Settings -->
+                <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Configurações Gerais</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="general-settings-form">
+                                <div class="mb-3">
+                                    <label for="scan-interval" class="form-label">Intervalo de Escaneamento (horas)</label>
+                                    <input type="number" class="form-control" id="scan-interval" name="scan_interval_hours" min="0.1" step="0.1" value="2">
+                                    <div class="form-text">Intervalo entre escaneamentos automáticos de oportunidades.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="max-concurrent-trades" class="form-label">Máximo de Operações Simultâneas</label>
+                                    <input type="number" class="form-control" id="max-concurrent-trades" name="max_concurrent_trades" min="1" step="1" value="1">
+                                    <div class="form-text">Número máximo de operações que podem ser executadas ao mesmo tempo.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="enable-auto-scan" name="enable_auto_scan" checked>
+                                        <label class="form-check-label" for="enable-auto-scan">Ativar Escaneamento Automático</label>
+                                    </div>
+                                    <div class="form-text">Quando ativado, o bot vai escanear automaticamente por oportunidades.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="reinvest-profits" name="reinvest_profits" checked>
+                                        <label class="form-check-label" for="reinvest-profits">Reinvestir Lucros</label>
+                                    </div>
+                                    <div class="form-text">Quando ativado, os lucros serão automaticamente usados em novas operações.</div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Salvar Configurações Gerais</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trading Settings -->
+                <div class="tab-pane fade" id="trading" role="tabpanel" aria-labelledby="trading-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Configurações de Trading</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="trading-settings-form">
+                                <div class="mb-3">
+                                    <label for="profit-threshold" class="form-label">Limiar de Lucro Mínimo (USD)</label>
+                                    <input type="number" class="form-control" id="profit-threshold" name="profit_threshold_usd" min="0" step="0.1" value="20">
+                                    <div class="form-text">O lucro mínimo esperado em USD para executar uma operação.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="max-loan-amount" class="form-label">Valor Máximo de Empréstimo (ETH)</label>
+                                    <input type="number" class="form-control" id="max-loan-amount" name="max_loan_amount" min="0" step="0.1" value="50">
+                                    <div class="form-text">O valor máximo para empréstimos flash em ETH (ou equivalente).</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="max-slippage" class="form-label">Slippage Máximo (%)</label>
+                                    <input type="number" class="form-control" id="max-slippage" name="max_slippage_percentage" min="0" step="0.1" value="1">
+                                    <div class="form-text">O slippage máximo permitido durante a execução de trades.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="gas-price-strategy" class="form-label">Estratégia de Preço de Gas</label>
+                                    <select class="form-select" id="gas-price-strategy" name="gas_price_strategy">
+                                        <option value="slow">Lento (Barato)</option>
+                                        <option value="standard" selected>Padrão (Equilibrado)</option>
+                                        <option value="fast">Rápido (Mais caro)</option>
+                                    </select>
+                                    <div class="form-text">A estratégia para definir o preço de gas nas transações.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="trading-strategy" class="form-label">Estratégia de Trading</label>
+                                    <select class="form-select" id="trading-strategy" name="trading_strategy">
+                                        <option value="conservative">Conservador (Baixo risco)</option>
+                                        <option value="balanced">Equilibrado</option>
+                                        <option value="aggressive" selected>Agressivo (Alto risco/retorno)</option>
+                                    </select>
+                                    <div class="form-text">Define o nível de risco que o bot vai assumir em suas operações.</div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Salvar Configurações de Trading</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Networks Settings -->
+                <div class="tab-pane fade" id="networks" role="tabpanel" aria-labelledby="networks-tab">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">Redes Blockchain</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-3">Selecione as redes em que o bot deve procurar oportunidades.</p>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 40px;"></th>
+                                            <th>Rede</th>
+                                            <th>Símbolo Nativo</th>
+                                            <th>Status</th>
+                                            <th>Explorer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for network in networks %}
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input network-checkbox" type="checkbox" value="{{ network.id }}" id="network-{{ network.id }}" {% if network.active %}checked{% endif %}>
+                                                </div>
+                                            </td>
+                                            <td>{{ network.name }}</td>
+                                            <td>{{ network.native_symbol }}</td>
+                                            <td>
+                                                {% if network.active %}
+                                                <span class="badge bg-success">Ativo</span>
+                                                {% else %}
+                                                <span class="badge bg-secondary">Desativado</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{{ network.explorer_url }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <button id="save-networks" class="btn btn-primary mt-3">Salvar Configurações de Redes</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DEX Settings -->
+                <div class="tab-pane fade" id="dex" role="tabpanel" aria-labelledby="dex-tab">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">Exchanges Descentralizadas (DEXs)</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-3">Selecione as DEXs em que o bot deve procurar oportunidades.</p>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 40px;"></th>
+                                            <th>Nome</th>
+                                            <th>Taxa</th>
+                                            <th>Redes Suportadas</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for dex in dex_list %}
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input dex-checkbox" type="checkbox" value="{{ dex.id }}" id="dex-{{ dex.id }}" {% if dex.active %}checked{% endif %}>
+                                                </div>
+                                            </td>
+                                            <td>{{ dex.name }}</td>
+                                            <td>{{ dex.fee_percentage }}%</td>
+                                            <td>
+                                                {% for network in dex.supported_networks %}
+                                                <span class="badge bg-info me-1">{{ network }}</span>
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% if dex.active %}
+                                                <span class="badge bg-success">Ativo</span>
+                                                {% else %}
+                                                <span class="badge bg-secondary">Desativado</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <button id="save-dexs" class="btn btn-primary mt-3">Salvar Configurações de DEXs</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Settings -->
+                <div class="tab-pane fade" id="ai" role="tabpanel" aria-labelledby="ai-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Configurações de IA</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="ai-settings-form">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="ai-evolution-enabled" name="ai_evolution_enabled" checked>
+                                        <label class="form-check-label" for="ai-evolution-enabled">Ativar Evolução de IA</label>
+                                    </div>
+                                    <div class="form-text">Quando ativado, o bot usará IA para otimizar suas estratégias de trading com o tempo.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="optimization-target" class="form-label">Alvo de Otimização</label>
+                                    <select class="form-select" id="optimization-target" name="optimization_target">
+                                        <option value="max_profit" selected>Maximizar Lucro</option>
+                                        <option value="max_volume">Maximizar Volume</option>
+                                        <option value="min_risk">Minimizar Risco</option>
+                                    </select>
+                                    <div class="form-text">Define o principal objetivo da otimização de IA.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="learning-rate" class="form-label">Taxa de Aprendizado</label>
+                                    <input type="range" class="form-range" id="learning-rate" name="learning_rate" min="0.01" max="1" step="0.01" value="0.05">
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted">Lento</span>
+                                        <span id="learning-rate-value">0.05</span>
+                                        <span class="text-muted">Rápido</span>
+                                    </div>
+                                    <div class="form-text">Velocidade com que o modelo de IA se adapta a novos dados.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="retraining-interval" class="form-label">Intervalo de Retreinamento (dias)</label>
+                                    <input type="number" class="form-control" id="retraining-interval" name="retraining_interval_days" min="1" step="1" value="7">
+                                    <div class="form-text">Frequência com que os modelos de IA são retreinados com novos dados.</div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Salvar Configurações de IA</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notifications Settings -->
+                <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Configurações de Notificações</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="notifications-settings-form">
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="email-notifications" name="email_notifications" checked>
+                                        <label class="form-check-label" for="email-notifications">Notificações por Email</label>
+                                    </div>
+                                    <div class="form-text">Receba notificações por email sobre eventos importantes.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="email-address" class="form-label">Endereço de Email</label>
+                                    <input type="email" class="form-control" id="email-address" name="email_address" value="">
+                                    <div class="form-text">Email para receber notificações.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="telegram-notifications" name="telegram_notifications">
+                                        <label class="form-check-label" for="telegram-notifications">Notificações por Telegram</label>
+                                    </div>
+                                    <div class="form-text">Receba notificações por Telegram sobre eventos importantes.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="telegram-bot-token" class="form-label">Token do Bot do Telegram</label>
+                                    <input type="text" class="form-control" id="telegram-bot-token" name="telegram_bot_token" value="">
+                                    <div class="form-text">Token do bot do Telegram para enviar notificações.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="telegram-chat-id" class="form-label">ID do Chat do Telegram</label>
+                                    <input type="text" class="form-control" id="telegram-chat-id" name="telegram_chat_id" value="">
+                                    <div class="form-text">ID do chat para onde enviar as notificações.</div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <h6>Eventos para Notificar</h6>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="notify-opportunities" name="notify_opportunities" checked>
+                                        <label class="form-check-label" for="notify-opportunities">Novas Oportunidades de Arbitragem</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="notify-trades" name="notify_trades" checked>
+                                        <label class="form-check-label" for="notify-trades">Transações Executadas</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="notify-errors" name="notify_errors" checked>
+                                        <label class="form-check-label" for="notify-errors">Erros e Falhas</label>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Salvar Configurações de Notificações</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize all forms with current config values
+        // In a real app, these would be fetched from an API
+        
+        // Update learning rate value display
+        document.getElementById('learning-rate').addEventListener('input', function() {
+            document.getElementById('learning-rate-value').textContent = this.value;
+        });
+        
+        // Handle form submissions
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = {};
+                
+                formData.forEach((value, key) => {
+                    // Handle checkboxes special case
+                    if (this.elements[key].type === 'checkbox') {
+                        data[key] = this.elements[key].checked;
+                    } else {
+                        data[key] = value;
+                    }
+                });
+                
+                // Show success message
+                const formId = this.id;
+                const successMessage = `Configurações de ${formId.split('-')[0]} salvas com sucesso!`;
+                
+                // Create a custom event to show an alert
+                const event = new CustomEvent('showAlert', {
+                    detail: {
+                        message: successMessage,
+                        type: 'success'
+                    }
+                });
+                document.dispatchEvent(event);
+                
+                // In a real app, this would send the data to an API
+                console.log(`Saving ${formId}:`, data);
+            });
+        });
+        
+        // Handle network checkboxes
+        document.getElementById('save-networks').addEventListener('click', function() {
+            const networkCheckboxes = document.querySelectorAll('.network-checkbox');
+            const activeNetworks = [];
+            
+            networkCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    activeNetworks.push(checkbox.value);
+                }
+            });
+            
+            // In a real app, this would send the data to an API
+            console.log('Active Networks:', activeNetworks);
+            
+            // Show success message
+            const event = new CustomEvent('showAlert', {
+                detail: {
+                    message: 'Configurações de redes salvas com sucesso!',
+                    type: 'success'
+                }
+            });
+            document.dispatchEvent(event);
+        });
+        
+        // Handle DEX checkboxes
+        document.getElementById('save-dexs').addEventListener('click', function() {
+            const dexCheckboxes = document.querySelectorAll('.dex-checkbox');
+            const activeDexs = [];
+            
+            dexCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    activeDexs.push(checkbox.value);
+                }
+            });
+            
+            // In a real app, this would send the data to an API
+            console.log('Active DEXs:', activeDexs);
+            
+            // Show success message
+            const event = new CustomEvent('showAlert', {
+                detail: {
+                    message: 'Configurações de DEXs salvas com sucesso!',
+                    type: 'success'
+                }
+            });
+            document.dispatchEvent(event);
+        });
+        
+        // Handle "Save All" button
+        document.getElementById('save-all-settings').addEventListener('click', function() {
+            // Trigger submit on all forms
+            forms.forEach(form => {
+                const submitEvent = new Event('submit', { cancelable: true });
+                form.dispatchEvent(submitEvent);
+            });
+            
+            // Trigger save networks and DEXs
+            document.getElementById('save-networks').click();
+            document.getElementById('save-dexs').click();
+            
+            // Show success message
+            const event = new CustomEvent('showAlert', {
+                detail: {
+                    message: 'Todas as configurações foram salvas com sucesso!',
+                    type: 'success'
+                }
+            });
+            document.dispatchEvent(event);
+        });
+        
+        // Custom event listener for showing alerts
+        document.addEventListener('showAlert', function(e) {
+            const { message, type } = e.detail;
+            
+            // Create alert element
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.role = 'alert';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            // Add to flash messages container
+            document.querySelector('.flash-messages').appendChild(alertDiv);
+            
+            // Auto-dismiss after 5 seconds
+            setTimeout(function() {
+                const bsAlert = new bootstrap.Alert(alertDiv);
+                bsAlert.close();
+            }, 5000);
+        });
+    });
+</script>
+{% endblock %}

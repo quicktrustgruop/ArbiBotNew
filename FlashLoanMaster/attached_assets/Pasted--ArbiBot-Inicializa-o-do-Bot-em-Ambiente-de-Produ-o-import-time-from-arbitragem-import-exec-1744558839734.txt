@@ -1,0 +1,64 @@
+# ArbiBot - Inicialização do Bot em Ambiente de Produção
+
+import time
+from arbitragem import executar_arbitragem
+desde mineracao import iniciar_mineracao
+from defi import executar_staking, executar_yield_farming
+from distribuicao import enviar_lucros
+from flashloans import iniciar_flash_loans
+from config import carregar_configuracoes_producao
+
+
+# Inicialização principal em ambiente de produção
+
+def iniciar_bot_producao(
+    mineracao_multimoedas=True,
+    hash_power="999999000000000000 TH/s",
+    flash_loans_ativos=True,
+    yield_farming=True,
+    staking=True,
+    trading_global=True,
+    tokenizacao_defi=True,
+    numero_max_transacoes_por_bloco=500,
+    envio_lucros_automatico=True,
+    intervalo_envio_lucros="30min",
+    ambiente="producao",
+    investimento_inicial=0,
+    calcular_lucro_liquido_pos_custos=True
+):
+    print("[🔁] Iniciando ArbiBot em ambiente de produção...")
+
+    config = carregar_configuracoes_producao()
+
+    if mineracao_multimoedas:
+        print(f"[⛏️] Iniciando mineração multimoedas com hash de {hash_power}...")
+        iniciar_mineracao(hash_power=hash_power)
+
+    if flash_loans_ativos:
+        print("[⚡] Flash Loans ativados...")
+        iniciar_flash_loans()
+
+    if staking:
+        print("[📥] Executando staking em todos os pools suportados...")
+        executar_staking()
+
+    if yield_farming:
+        print("[🌾] Yield farming ativado com estratégias otimizadas...")
+        executar_yield_farming()
+
+    # Loop principal para arbitragem e mineração
+    while True:
+        executar_arbitragem(
+            limite_transacoes_bloco=numero_max_transacoes_por_bloco,
+            calcular_lucro_liquido=calcular_lucro_liquido_pos_custos
+        )
+
+        if envio_lucros_automatico:
+            print("[📤] Verificando agendamento de envio de lucros...")
+            enviar_lucros(intervalo=intervalo_envio_lucros)
+
+        time.sleep(360)  # Verificação a cada 6 minutos (360 segundos)
+
+
+if __name__ == "__main__":
+    iniciar_bot_producao()

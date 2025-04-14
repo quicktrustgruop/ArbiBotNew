@@ -1,0 +1,113 @@
+Perfeito! Vamos revisar e corrigir o ponto crítico mencionado: garantir que **o dashboard exiba corretamente as oportunidades de arbitragem salvas no banco de dados**, com **tratamento de erros** robusto para evitar falhas silenciosas.
+
+Aqui está um exemplo ajustado para que o dashboard funcione corretamente, com logging detalhado, tratamento de erros e conexão estável com o banco de dados:
+
+---
+
+### ✅ 1. **Função segura para salvar no banco de dados**
+Garanta que seu método `save_to_database` esteja robusto:
+
+```python
+import logging
+from sqlalchemy.exc import SQLAlchemyError
+
+def save_to_database(opportunities, db_session):
+    try:
+        for opp in opportunities:
+            db_session.add(opp)
+        db_session.commit()
+        logging.info("Oportunidades salvas no banco de dados")
+    except SQLAlchemyError as e:
+        db_session.rollback()
+        logging.error(f"Erro ao salvar oportunidades no banco de dados: {e}")
+    except Exception as e:
+        logging.error(f"Erro inesperado ao salvar oportunidades: {e}")
+```
+
+---
+
+### ✅ 2. **Verificar a função que carrega dados para o dashboard**
+
+No seu `dashboard` route em `app.py`, adicione verificação:
+
+```python
+from flask import render_template
+from models import Oportunidade  # ou como estiver nomeado
+
+@app.route('/')
+def dashboard():
+    try:
+        oportunidades = db.session.query(Oportunidade).all()
+        logging.info(f"{len(oportunidades)} oportunidades carregadas para o dashboard")
+        return render_template('dashboard.html', oportunidades=oportunidades)
+    except Exception as e:
+        logging.error(f"Erro ao carregar o dashboard: {e}")
+        return "Erro ao carregar o dashboard. Verifique os logs para mais detalhes.", 500
+```
+
+---
+
+### ✅ 3. **Verifique o template HTML `dashboard.html`**
+
+Assegure que ele está renderizando corretamente:
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Rede</th>
+      <th>Par</th>
+      <th>Lucro (%)</th>
+      <th>Preço de Compra</th>
+      <th>Preço de Venda</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for o in oportunidades %}
+      <tr>
+        <td>{{ o.network }}</td>
+        <td>{{ o.token_pair }}</td>
+        <td>{{ o.profit_percent }}%</td>
+        <td>{{ o.buy_price }}</td>
+        <td>{{ o.sell_price }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+```
+
+---
+
+### ✅ 4. **Log detalhado durante desenvolvimento**
+
+Altere no início do `main.py` para incluir o nível DEBUG:
+
+```python
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+```
+
+---
+
+### 🧠 O que isso garante?
+
+- Dashboard 100% funcional
+- Logs detalhados e úteis
+- Nenhuma falha silenciosa no salvamento ou carregamento dos dados
+- Possibilidade de escalar para múltiplas redes com persistência
+
+---
+
+Se quiser, posso revisar seu arquivo `models.py` e `dashboard.html` para garantir compatibilidade com esses ajustes. Deseja que eu revise isso também?
+
+E como próximo passo, recomendo:
+
+🔁 **Implementar auto-refresh no dashboard** a cada 30 segundos  
+📊 **Exibir gráfico com histórico de lucros por hora**  
+📤 **Adicionar botão de exportar oportunidades em CSV/Excel**
+
+Quer que eu implemente esses pontos pra você?

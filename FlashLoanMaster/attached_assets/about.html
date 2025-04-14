@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre - Crypto Arbitrage Bot{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Sobre o Projeto</h1>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">ArbiBot - Bot de Arbitragem de Criptomoedas</h5>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Uma solução avançada para detectar e executar automaticamente oportunidades de arbitragem em mercados de criptomoedas.</p>
+                    
+                    <p>ArbiBot é um bot de arbitragem de criptomoedas que utiliza flash loans para executar trades lucrativos sem necessidade de grande capital inicial. O bot monitora continuamente diversos pares de tokens em diferentes corretoras e redes blockchain, identificando discrepâncias de preços que podem ser exploradas para gerar lucro.</p>
+                    
+                    <h5 class="mt-4">Principais Recursos</h5>
+                    <ul>
+                        <li><strong>Multi-Exchange:</strong> Monitora e executa trades em várias DEXs como Uniswap, SushiSwap, PancakeSwap e outras.</li>
+                        <li><strong>Multi-Chain:</strong> Suporte para múltiplas redes blockchain, incluindo Ethereum, Binance Smart Chain, Polygon, Arbitrum e Optimism.</li>
+                        <li><strong>Flash Loans:</strong> Utiliza empréstimos flash para executar arbitragens sem necessidade de capital inicial substancial.</li>
+                        <li><strong>Análise de Risco:</strong> Sistema inteligente de gerenciamento de risco para filtrar oportunidades baseado em diversos parâmetros.</li>
+                        <li><strong>Dashboard:</strong> Interface web interativa para monitoramento e controle das operações.</li>
+                        <li><strong>Inteligência Artificial:</strong> Algoritmos de IA para otimização contínua das estratégias de trading.</li>
+                        <li><strong>Notificações:</strong> Sistema de alertas para manter você informado sobre oportunidades e execuções.</li>
+                    </ul>
+                    
+                    <h5 class="mt-4">Como Funciona</h5>
+                    <ol>
+                        <li>O bot escaneia continuamente os pares de tokens em diferentes DEXs e redes.</li>
+                        <li>Quando uma discrepância de preço é identificada, o bot calcula o potencial lucro considerando taxas, slippage e custo de gas.</li>
+                        <li>Se a oportunidade passar pelos filtros de risco, o bot executa um flash loan para obter o capital necessário.</li>
+                        <li>O bot realiza a compra no DEX com preço mais baixo e a venda no DEX com preço mais alto.</li>
+                        <li>O empréstimo flash é pago dentro da mesma transação, e o lucro líquido é retido na carteira do bot.</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Evolução da IA</h5>
+                </div>
+                <div class="card-body">
+                    <p>O ArbiBot incorpora tecnologia de inteligência artificial avançada que evolui com o tempo para maximizar o desempenho do trading.</p>
+                    
+                    <h6>Recursos de IA:</h6>
+                    <ul>
+                        <li><strong>Aprendizado por Reforço:</strong> O bot aprende com seus próprios trades para melhorar continuamente suas estratégias.</li>
+                        <li><strong>Previsão de Slippage:</strong> Algoritmos ML para prever slippage em diferentes condições de mercado e tamanhos de trades.</li>
+                        <li><strong>Timing de Entrada:</strong> IA para otimizar o timing das execuções baseado em padrões históricos.</li>
+                        <li><strong>Otimização de Parâmetros:</strong> Ajuste automático de parâmetros de trading baseado em desempenho histórico.</li>
+                        <li><strong>Detecção de Padrões:</strong> Identificação de padrões recorrentes de arbitragem para proativamente posicionar-se para oportunidades.</li>
+                    </ul>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-brain me-2"></i> A IA do bot está em constante evolução, melhorando suas estratégias a cada trade executado.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Versão Atual</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Versão:</strong> 1.0.0-beta</p>
+                    <p><strong>Última Atualização:</strong> 13 de abril de 2025</p>
+                    <p><strong>Estado:</strong> <span class="badge bg-warning">Beta</span></p>
+                    
+                    <div class="d-grid gap-2 mt-3">
+                        <a href="#" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-file-alt me-2"></i> Documentação Completa
+                        </a>
+                        <a href="#" class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-code-branch me-2"></i> Notas da Versão
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Estatísticas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Redes Suportadas:</span>
+                        <span class="fw-bold">5</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>DEXs Integradas:</span>
+                        <span class="fw-bold">12</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Pares Monitorados:</span>
+                        <span class="fw-bold">+200</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Modelos de IA:</span>
+                        <span class="fw-bold">3</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Intervalo de Escaneamento:</span>
+                        <span class="fw-bold">2 horas</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Contato & Suporte</h5>
+                </div>
+                <div class="card-body">
+                    <p>Para dúvidas, sugestões ou relatos de bugs, entre em contato através dos canais abaixo:</p>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-envelope fa-fw me-2 text-primary"></i>
+                        <span>suporte@arbibot.com</span>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fab fa-telegram fa-fw me-2 text-primary"></i>
+                        <span>t.me/arbibot_support</span>
+                    </div>
+                    
+                    <div class="d-flex align-items-center">
+                        <i class="fab fa-discord fa-fw me-2 text-primary"></i>
+                        <span>discord.gg/arbibot</span>
+                    </div>
+                    
+                    <div class="alert alert-warning mt-3">
+                        <i class="fas fa-exclamation-triangle me-2"></i> Esta é uma versão beta e está em desenvolvimento ativo. Use por sua conta e risco.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

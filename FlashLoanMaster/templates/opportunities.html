@@ -1,0 +1,294 @@
+{% extends 'base.html' %}
+
+{% block title %}Arbitrage Opportunities - Crypto Arbitrage Bot{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Arbitrage Opportunities</h1>
+    <div class="page-actions">
+        <button id="scan-now" class="btn btn-primary">
+            <i class="fas fa-search"></i> Scan Now
+        </button>
+    </div>
+</div>
+
+<!-- Opportunity Stats -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-search-dollar stat-card-icon primary"></i>
+                <div class="stat-card-title">Total Opportunities</div>
+                <div id="total-opps" class="stat-card-value">{{ opportunities|length }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-eye stat-card-icon info"></i>
+                <div class="stat-card-title">Detected</div>
+                <div id="detected-opps" class="stat-card-value info">
+                    {{ opportunities|selectattr('status', 'equalto', 'detected')|list|length }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-check-circle stat-card-icon success"></i>
+                <div class="stat-card-title">Executed</div>
+                <div id="executed-opps" class="stat-card-value success">
+                    {{ opportunities|selectattr('status', 'equalto', 'executed')|list|length }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="stat-card">
+                <i class="fas fa-times-circle stat-card-icon danger"></i>
+                <div class="stat-card-title">Failed</div>
+                <div id="failed-opps" class="stat-card-value danger">
+                    {{ opportunities|selectattr('status', 'equalto', 'failed')|list|length }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Stats & Distribution -->
+<div class="row mb-4">
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="stat-card">
+                        <i class="fas fa-dollar-sign stat-card-icon success"></i>
+                        <div class="stat-card-title">Potential Profit</div>
+                        <div id="potential-profit" class="stat-card-value success">
+                            ${{ opportunities|selectattr('status', 'in', ['detected', 'processing'])|sum(attribute='expected_profit')|round(2) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="stat-card">
+                        <i class="fas fa-percentage stat-card-icon warning"></i>
+                        <div class="stat-card-title">Avg. Price Difference</div>
+                        <div id="avg-price-diff" class="stat-card-value warning">
+                            {% if opportunities|length > 0 %}
+                                {{ (opportunities|sum(attribute='price_difference_percent') / opportunities|length)|round(2) }}%
+                            {% else %}
+                                0.00%
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts -->
+            <div class="col-md-12 mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Price Difference Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="price-diff-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Distribution</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <h6>By Network</h6>
+                    <div id="networks-list" class="mt-2">
+                        {% set networks = {} %}
+                        {% for opp in opportunities %}
+                            {% if opp.network in networks %}
+                                {% set _ = networks.update({opp.network: networks[opp.network] + 1}) %}
+                            {% else %}
+                                {% set _ = networks.update({opp.network: 1}) %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% for network, count in networks.items() %}
+                            <div class="network-item d-flex justify-content-between align-items-center">
+                                <span>{{ network }}</span>
+                                <span class="badge bg-primary">{{ count }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h6>By Token Pair</h6>
+                    <div id="pairs-list" class="mt-2">
+                        {% set pairs = {} %}
+                        {% for opp in opportunities %}
+                            {% if opp.token_pair in pairs %}
+                                {% set _ = pairs.update({opp.token_pair: pairs[opp.token_pair] + 1}) %}
+                            {% else %}
+                                {% set _ = pairs.update({opp.token_pair: 1}) %}
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% for pair, count in pairs.items() %}
+                            <div class="pair-item d-flex justify-content-between align-items-center">
+                                <span>{{ pair }}</span>
+                                <span class="badge bg-primary">{{ count }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">DEX Distribution</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="dex-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Opportunity Filters -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Filters</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group mb-3">
+                    <label for="network-filter" class="form-label">Network</label>
+                    <select class="form-control" id="network-filter">
+                        <option value="all">All Networks</option>
+                        <option value="ethereum">Ethereum</option>
+                        <option value="bsc">BSC</option>
+                        <option value="polygon">Polygon</option>
+                        <option value="arbitrum">Arbitrum</option>
+                        <option value="optimism">Optimism</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="form-group mb-3">
+                    <label for="status-filter" class="form-label">Status</label>
+                    <select class="form-control" id="status-filter">
+                        <option value="all">All Statuses</option>
+                        <option value="detected">Detected</option>
+                        <option value="executed">Executed</option>
+                        <option value="failed">Failed</option>
+                        <option value="processing">Processing</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="form-group mb-3">
+                    <label for="min-profit-filter" class="form-label">Min. Profit ($)</label>
+                    <input type="range" class="form-range" id="min-profit-filter" min="0" max="100" step="1" value="0">
+                    <div class="d-flex justify-content-between">
+                        <small>$0</small>
+                        <small>$50</small>
+                        <small>$100+</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 d-flex align-items-end">
+                <button id="apply-filter" class="btn btn-primary me-2">Apply Filters</button>
+                <button id="reset-filter" class="btn btn-secondary">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Opportunities Table -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">All Opportunities</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table" id="opportunities-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Network</th>
+                        <th>Token Pair</th>
+                        <th>Buy DEX</th>
+                        <th>Sell DEX</th>
+                        <th>Price Diff %</th>
+                        <th>Expected Profit</th>
+                        <th>Detected At</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if opportunities %}
+                        {% for opp in opportunities %}
+                            <tr>
+                                <td>{{ opp.id }}</td>
+                                <td>{{ opp.network }}</td>
+                                <td>{{ opp.token_pair }}</td>
+                                <td>{{ opp.buy_dex }}</td>
+                                <td>{{ opp.sell_dex }}</td>
+                                <td>{{ "%.2f"|format(opp.price_difference_percent) }}%</td>
+                                <td>${{ "%.2f"|format(opp.expected_profit) }}</td>
+                                <td>{{ opp.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>
+                                    <span class="status-pill 
+                                        {% if opp.status == 'executed' %}success
+                                        {% elif opp.status == 'failed' %}danger
+                                        {% elif opp.status == 'processing' %}warning
+                                        {% else %}info{% endif %}">
+                                        {{ opp.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary view-opportunity" data-opp-id="{{ opp.id }}">Details</button>
+                                    {% if opp.status == 'detected' %}
+                                        <button class="btn btn-sm btn-success execute-opportunity" data-opp-id="{{ opp.id }}">Execute</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="10" class="text-center">No arbitrage opportunities found</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/opportunities.js') }}"></script>
+{% endblock %}

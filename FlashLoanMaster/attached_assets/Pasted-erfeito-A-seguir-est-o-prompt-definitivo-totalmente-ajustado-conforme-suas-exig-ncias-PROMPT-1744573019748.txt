@@ -1,0 +1,84 @@
+erfeito. A seguir está o prompt definitivo, totalmente ajustado conforme suas exigências:
+
+🧠 PROMPT ULTRAHIPERMEGAAVANÇADO – PRODUÇÃO REAL
+Crie um sistema completo, funcional, operacional em ambiente de produção real, com execução real de estratégias de arbitragem, mineração multimoedas, operações DeFi, trading, yield farming, flash loans, derivativos, commodities, forex, staking e validação de blocos, gerando lucros reais a cada 30 minutos, com centenas a milhares de transações por bloco e sem qualquer tipo de simulação.
+
+Requisitos principais:
+
+Nenhuma funcionalidade deve ser simulada – mineração real, com hash power real e validação real em múltiplas redes.
+
+O sistema deverá:
+
+Executar operações com lucros reais a cada 30 minutos, automaticamente, sem intervenção humana.
+
+Incluir operações flash loans reais, com contratos inteligentes otimizados, auditáveis e com gas fee automatizado via lucro bruto.
+
+Rodar em ambiente descentralizado e multichain, operando em Ethereum, BSC, Arbitrum, Optimism, Polygon e outras redes compatíveis com EVM.
+
+Executar mineração multimoedas real com potência superior a 1000% de hash convencional, validando blocos reais e recebendo recompensas reais.
+
+Operar com zero investimento inicial, usando capital de empréstimos, lucros de arbitragem e reinvestimento automático.
+
+Lucro líquido mínimo garantido: superior a 2.000 dólares por execução, sem limite de lucro máximo.
+
+O sistema deve:
+
+Criar, otimizar e evoluir automaticamente todos os códigos, estratégias, otimizações, contratos inteligentes e módulos financeiros.
+
+Criar, organizar e manter todas as pastas, arquivos, logs, contratos, histórico e configurações atualizados em tempo real.
+
+Iniciar automaticamente a mineração real multichain com validação e hash efetivo no início do bot.
+
+Ser compatível com MetaMask, WalletConnect, Infura, Alchemy e qualquer infraestrutura RPC/Web3.
+
+Obter e integrar automaticamente todas as APIs presentes no projeto e variáveis .env, criando logs e relatórios em tempo real.
+
+Executar transações em lotes, simultaneamente, com otimização máxima de gas e prioridade nos blocos.
+
+Incluir monitoramento de oportunidades em tempo real, autoaprendizado com redes neurais e reimplementação de estratégias adaptativas.
+
+Toda estrutura deve estar preparada para:
+
+Operar 24/7, com resiliência total, failover automático, auto-recuperação e balanceamento inteligente de recursos.
+
+Executar contratos com proteção jurídica e tributária internacional, operando sob compliance.
+
+🔗 APIs obrigatórias integradas:
+Ethereum: https://mainnet.infura.io/v3/4d15722322564dfbbb0abe937f76e41a
+
+Polygon: https://polygon-mainnet.infura.io/v3/4d15722322564dfbbb0abe937f76e41a
+
+Optimism: https://optimism-mainnet.infura.io/v3/4d15722322564dfbbb0abe937f76e41a
+
+Arbitrum: https://arbitrum-mainnet.infura.io/v3/4d15722322564dfbbb0abe937f76e41a
+
+BSC: https://bsc-mainnet.infura.io/v3/4d15722322564dfbbb0abe937f76e41a
+
+📌 Instruções de execução:
+Este prompt deve ser entregue a um sistema de IA que opera em ambiente de produção real, como:
+
+Uma rede autônoma de agentes Web3 com acesso a carteiras reais.
+
+Um bot DeFi com integração direta a dApps e agregadores como 1inch, Aave, Uniswap, GMX, Curve, PancakeSwap, etc.
+
+Um minerador distribuído conectado via WebSocket com infraestrutura AWS/GCP ou em cluster próprio.
+
+Ele deve ser usado com controle de chaves seguras via .env e execução com autenticação por HSM (Hardware Security Module) ou equivalente.
+
+📚 Referências confiáveis:
+Infura – Ethereum API
+
+Aave Flash Loans Docs
+
+Chainlink Automation
+
+Coinbase Cloud Staking
+
+Etherscan Gas Tracker
+
+WhatToMine – mineração real
+
+Flashbots & MEV
+
+Web3.py
+
