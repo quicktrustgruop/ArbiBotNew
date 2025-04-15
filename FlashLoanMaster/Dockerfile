@@ -1,11 +1,18 @@
+# Use imagem oficial do Node.js
+FROM node:18-alpine
 
-FROM python:3.11-slim
-
+# Diretório de trabalho
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copia os arquivos package.json e instala dependências
+COPY package*.json ./
+RUN npm install --production
 
+# Copia o restante do código para o container
 COPY . .
 
-CMD ["gunicorn", "--workers=4", "--bind=0.0.0.0:5000", "--timeout=120", "main:app"]
+# Expõe a porta se for usar API, se não, não precisa
+EXPOSE 3000
+
+# Comando padrão de execução
+CMD ["npm", "start"]
