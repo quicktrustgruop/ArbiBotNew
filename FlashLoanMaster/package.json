@@ -2,14 +2,14 @@
   "name": "arbibot-system",
   "version": "1.0.0",
   "description": "Sistema completo de arbitragem automatizada, flash loans e mineração multimoedas com IA evolutiva para maximização de lucros.",
-  "main": "evo_bot_system.js",
+  "main": "production_launcher.js",
   "scripts": {
     "start": "node production_launcher.js",
     "dev": "node evo_bot_system.js",
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["arbitragem", "defi", "flashloans", "trading", "bot", "mineração", "multichain"],
+  "author": "tjmendes",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.8.4",

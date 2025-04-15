@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+start_arbibot.sh
+Procfile
+replit.nix
+.env
+*.pyc
+__pycache__/

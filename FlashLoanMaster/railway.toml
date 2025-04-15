@@ -1,0 +1,4 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "cd FlashLoanMaster && npm install"
+startCommand = "cd FlashLoanMaster && npm start"
